@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "633745136884",
+    "project_id": "remote-config-1173b",
+    "storage_bucket": "remote-config-1173b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:633745136884:android:42509dcf932b1fe71d52a1",
+        "android_client_info": {
+          "package_name": "com.whitelabel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "633745136884-18fsa59tvt2dqbet41e6jdj27jku574j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAI64n20lxae1qJ0irsV8LvjQEc-gmxhRg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "633745136884-18fsa59tvt2dqbet41e6jdj27jku574j.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "633745136884-up9gmcg8ij2lgroposn0kc0su1a5tts4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.saikaka.app.guruom1"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

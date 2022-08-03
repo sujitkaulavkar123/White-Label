@@ -1,26 +1,17 @@
 
 import React from 'react';
-import {
-  View,
-} from 'react-native';
-import List from './src/containers/List';
-import First from './src/hoc/SampleHOC/First';
-import Second from './src/hoc/SampleHOC/Second';
+import { useSelector } from 'react-redux';
+import CustomLoader from './src/atoms/CustomLoader';
+import AuthNavigator from './src/components/router';
 
 const App = () => {
+  const { isLoading } = useSelector((state: any) => state.loader)
 
   return (
-    <View style={{
-      display: "flex",
-      flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
-    }}>
-      <Second data={{
-        name: "Sujit",
-        lastName: "Kaulavkar"
-      }} />
-    </View>
+    <>
+      <AuthNavigator />
+      {isLoading && <CustomLoader />}
+    </>
   );
 };
 
