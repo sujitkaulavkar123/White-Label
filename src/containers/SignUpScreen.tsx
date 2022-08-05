@@ -1,13 +1,11 @@
 import { NavigationProp } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react'
-import { View } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components/native'
 import CustomAlert from '../atoms/CustomAlert';
 import CustomButton from '../atoms/CustomButton';
 import CustomInput from '../atoms/CustomInput';
-import { hideLoader, showLoader } from '../redux/loaderReducer';
-import { registerUser } from '../server';
+import { registerUserWith } from '../redux/authReducer';
 
 const Container = styled.View`
   display: flex;
@@ -32,10 +30,17 @@ export default function SignUpScreen(props: RouterProps) {
 
   const { navigation } = props;
   const dispatch = useDispatch();
+  const { user } = useSelector((state: any) => state.auth);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isRegisterDisabled, setIsRegisterDisabled] = useState(true);
+
+  useEffect(() => {
+    user && (
+      CustomAlert("", user, [{ text: "Awesome", onPress: () => navigation.goBack() }])
+    )
+  }, [user]);
 
   useEffect(() => {
     if (email.length && password.length) {
@@ -58,16 +63,7 @@ export default function SignUpScreen(props: RouterProps) {
   }
 
   function handleRegisterAction() {
-    dispatch(showLoader());
-    registerUser(email, password, (data: any) => {
-      dispatch(hideLoader());
-      console.log("data", data);
-      if (data.data) {
-        CustomAlert("", data.message, [{ text: "Awesome", onPress: () => navigation.goBack() }])
-      } else {
-        CustomAlert("", data.message)
-      }
-    });
+    dispatch(registerUserWith({ emailId: email, password: password }));
   }
 
   return (

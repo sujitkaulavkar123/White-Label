@@ -22,7 +22,6 @@ function SplashScreen(props: RouterProps) {
 
   const [initializing, setInitializing] = useState<boolean>(true);
   const { user } = useSelector((state: any) => state.auth)
-  console.log("user", user);
 
   function onAuthStateChanged(user: any) {
     // setCurrentUser(user);

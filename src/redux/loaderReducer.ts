@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAction, createSlice } from '@reduxjs/toolkit';
 
 interface LoaderObj {
   isLoading: boolean;
@@ -7,6 +7,8 @@ interface LoaderObj {
 const initialState: LoaderObj = {
   isLoading: false
 }
+
+export const ExtraReducers = createAction("extraReducers")
 
 const loaderSlice = createSlice({
   name: "loader",
@@ -18,6 +20,11 @@ const loaderSlice = createSlice({
     hideLoader: (state) => {
       state.isLoading = false;
     }
+  },
+  extraReducers: (builder) => {
+    builder.addCase(ExtraReducers, () => {
+      console.log("test extra reducer in loader");
+    })
   }
 })
 

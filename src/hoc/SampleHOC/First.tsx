@@ -36,7 +36,6 @@ const CellContainer = styled.View`
 
 const First: FC = (props) => {
   const [response, setResponse] = useState<Post[] | null>(null);
-  console.log("First props", props);
 
   useEffect(() => {
     (async () => {

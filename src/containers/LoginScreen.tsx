@@ -1,13 +1,11 @@
 import { NavigationProp } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components/native'
-import CustomAlert from '../atoms/CustomAlert';
 import CustomButton from '../atoms/CustomButton';
 import CustomInput from '../atoms/CustomInput';
-import { hideLoader, showLoader } from '../redux/loaderReducer';
-import { setUser } from '../redux/authReducer';
-import { loginUser } from '../server';
+import { loginUserWith } from '../redux/authReducer';
+import { AppDispatch } from '../redux';
 
 const Container = styled.View`
   display: flex;
@@ -30,13 +28,18 @@ interface RouterProps {
 
 export default function LoginScreen(props: RouterProps) {
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
+  const { user } = useSelector((state: any) => state.auth);
   const { navigation } = props;
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoginDisabled, setIsLoginDisabled] = useState(true);
+
+  useEffect(() => {
+    user && homePage();
+  }, [user]);
 
   useEffect(() => {
     if (email.length && password.length) {
@@ -45,6 +48,10 @@ export default function LoginScreen(props: RouterProps) {
       setIsLoginDisabled(true);
     }
   }, [email, password]);
+
+  function homePage() {
+    props.navigation.navigate("Landing");
+  }
 
   function handleEmailAddressChange(value: string) {
     setEmail(value);
@@ -55,18 +62,7 @@ export default function LoginScreen(props: RouterProps) {
   }
 
   function handleLoginAction(_: any) {
-    dispatch(showLoader());
-    loginUser(email, password, (data: any) => {
-      console.log("data", data);
-
-      dispatch(hideLoader());
-      if (data.data) {
-        dispatch(setUser(data.data));
-        navigation.navigate("Landing");
-      } else {
-        CustomAlert("", data.message)
-      }
-    });
+    dispatch(loginUserWith({ emailId: email, password: password }));
   }
 
   function handleRegisterAction() {
