@@ -1,9 +1,15 @@
+import { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { loginUser, registerUser } from "../server";
 import { ExtraReducers } from "./loaderReducer";
 interface User {
   emailId: string,
   password: string
+}
+
+interface LoginResponse {
+  message: string | null,
+  data: object | null
 }
 interface UserObject {
   user: Object | null,
@@ -17,13 +23,13 @@ const initialState: UserObject = {
   errorMessage: null
 }
 
-export const loginUserWith = createAsyncThunk<any, User>("auth/loginUserToFirebase", async (user) => {
+export const loginUserWith = createAsyncThunk<LoginResponse, User>("auth/loginUserToFirebase", async (user) => {
   const { emailId, password } = user;
   try {
     const result = await loginUser(emailId, password);
 
     return {
-      data: result?.user?._user || null,
+      data: JSON.parse(JSON.stringify(result?.user)) || null,
       message: null
     }
   } catch (error: any) {
@@ -34,12 +40,12 @@ export const loginUserWith = createAsyncThunk<any, User>("auth/loginUserToFireba
   }
 })
 
-export const registerUserWith = createAsyncThunk<any, User>("auth/registerUserToFirebase", async (user) => {
+export const registerUserWith = createAsyncThunk<LoginResponse, User>("auth/registerUserToFirebase", async (user) => {
   const { emailId, password } = user;
   try {
     const result = await registerUser(emailId, password);
     return {
-      data: result?.user,
+      data: JSON.parse(JSON.stringify(result?.user)),
       message: null
     }
   } catch (error: any) {
