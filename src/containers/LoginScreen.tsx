@@ -1,4 +1,4 @@
-import { NavigationProp } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components/native'
@@ -6,6 +6,7 @@ import CustomButton from '../atoms/CustomButton';
 import CustomInput from '../atoms/CustomInput';
 import { loginUserWith } from '../redux/authReducer';
 import { AppDispatch } from '../redux';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 const Container = styled.View`
   display: flex;
@@ -22,16 +23,20 @@ const ButtonContainer = styled.View`
   width: 100%;
 `;
 
-interface RouterProps {
-  navigation: NavigationProp<any, any>;
-}
+type RootStackParamList = {
+  Landing: undefined;
+  SignUp: undefined;
+  Login: undefined;
+};
 
-export default function LoginScreen(props: RouterProps) {
+type AuthNavProps = NativeStackNavigationProp<RootStackParamList, "Login">;
 
-  const dispatch = useDispatch<AppDispatch>();
+export default function LoginScreen() {
 
   const { user } = useSelector((state: any) => state.auth);
-  const { navigation } = props;
+
+  const dispatch = useDispatch<AppDispatch>();
+  const navigation = useNavigation<AuthNavProps>();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -49,8 +54,8 @@ export default function LoginScreen(props: RouterProps) {
     }
   }, [email, password]);
 
-  function homePage() {
-    props.navigation.navigate("Landing");
+  const homePage = () => {
+    navigation.navigate("Landing");
   }
 
   function handleEmailAddressChange(value: string) {
@@ -61,12 +66,12 @@ export default function LoginScreen(props: RouterProps) {
     setPassword(value);
   }
 
-  function handleLoginAction(_: any) {
+  async function handleLoginAction(_: any) {
     dispatch(loginUserWith({ emailId: email, password: password }));
   }
 
   function handleRegisterAction() {
-    navigation.navigate("Sign Up");
+    navigation.navigate("SignUp");
   }
 
   return (

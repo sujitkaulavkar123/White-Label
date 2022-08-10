@@ -15,10 +15,10 @@ function AuthNavigator() {
       <AuthStack.Navigator screenOptions={{
         headerShown: false,
       }}>
-        <AuthStack.Screen name="Splash" component={SplashScreen} />
         <AuthStack.Screen name="Login" component={LoginScreen} />
-        <AuthStack.Screen name="Sign Up" component={SignUpScreen} />
+        <AuthStack.Screen name="SignUp" component={SignUpScreen} />
         <AuthStack.Screen name="Landing" component={LandingScreen} />
+        <AuthStack.Screen name="Splash" component={SplashScreen} />
       </AuthStack.Navigator>
     </NavigationContainer>
   );

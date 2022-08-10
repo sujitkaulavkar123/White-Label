@@ -34,6 +34,8 @@ function SplashScreen(props: RouterProps) {
   }, []);
 
   useEffect(() => {
+    console.log("initializing", initializing);
+
     if (initializing === false) {
       if (!user) {
         navigation.navigate("Login");

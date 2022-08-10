@@ -21,8 +21,9 @@ export const loginUserWith = createAsyncThunk<any, User>("auth/loginUserToFireba
   const { emailId, password } = user;
   try {
     const result = await loginUser(emailId, password);
+
     return {
-      data: result?.user,
+      data: result?.user?._user || null,
       message: null
     }
   } catch (error: any) {
@@ -71,7 +72,7 @@ const authSlice = createSlice({
 
     builder.addCase(loginUserWith.fulfilled, (state, action) => {
       state.isLoading = false;
-      state.user = action.payload?.data?._user || null;
+      state.user = action.payload?.data || null;
       state.errorMessage = action.payload?.message || null;
     })
     builder.addCase(loginUserWith.rejected, (state, action: PayloadAction<any>) => {

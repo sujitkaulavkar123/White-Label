@@ -1,6 +1,7 @@
-import React, { FC } from "react";
-import { Text, TouchableOpacity } from "react-native";
-import styled from "styled-components/native";
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import React, { FC } from 'react';
+import { Text, TouchableOpacity } from 'react-native';
+import styled from 'styled-components/native';
 
 const Container = styled.View`
   display: flex;
@@ -10,11 +11,15 @@ const Container = styled.View`
   background-color: green;
 `;
 
-function LandingScreen({ navigation }) {
-
-  return <Container><TouchableOpacity onPress={
-    navigation.goBack()
-  }><Text>Logout</Text></TouchableOpacity></Container>
+function LandingScreen() {
+  const navigation = useNavigation();
+  return (
+    <Container>
+      <TouchableOpacity onPress={() => navigation.goBack()}>
+        <Text>Logout</Text>
+      </TouchableOpacity>
+    </Container>
+  );
 }
 
 export default LandingScreen;
